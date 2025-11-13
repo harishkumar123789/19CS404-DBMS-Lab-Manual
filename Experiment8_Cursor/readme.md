@@ -1,6 +1,6 @@
 # Experiment 8: PL/SQL Cursor Programs
-## Name: VIGNESH.V
-## Reg.no:212223230241
+## Name: HARISH KUMAR S
+## Reg.no:212224230091
 ## AIM
 To write and execute PL/SQL programs using cursors and exception handling to manage runtime errors effectively and display appropriate messages.
 
