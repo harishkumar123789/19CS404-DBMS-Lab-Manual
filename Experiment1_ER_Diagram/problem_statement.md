@@ -1,95 +1,145 @@
-# Experiment 1: Entity-Relationship (ER) Diagram
+# ER Diagram Workshop – Submission Template
 
-## 🎯 Objective:
-To understand and apply the concepts of ER modeling by creating an ER diagram for a real-world application.
+## Objective
+To understand and apply ER modeling concepts by creating ER diagrams for real-world applications.
 
-## 📚 Purpose:
-The purpose of this workshop is to gain hands-on experience in designing ER diagrams that visually represent the structure of a database including entities, relationships, attributes, and constraints.
-
----
-
-## 🧪 Choose One Scenario:
-
-### 🔹 Scenario 1: University Database
-Design a database to manage students, instructors, programs, courses, and student enrollments. Include prerequisites for courses.
-
-**User Requirements:**
-- Academic programs grouped under departments.
-- Students have admission number, name, DOB, contact info.
-- Instructors with staff number, contact info, etc.
-- Courses have number, name, credits.
-- Track course enrollments by students and enrollment date.
-- Add support for prerequisites (some courses require others).
+## Purpose
+Gain hands-on experience in designing ER diagrams that represent database structure including entities, relationships, attributes, and constraints.
 
 ---
 
-### 🔹 Scenario 2: Hospital Database
-Design a database for patient management, appointments, medical records, and billing.
+# Scenario A: City Fitness Club Management
 
-**User Requirements:**
-- Patient details including contact and insurance.
-- Doctors and their departments, contact info, specialization.
-- Appointments with reason, time, patient-doctor link.
-- Medical records with treatments, diagnosis, test results.
-- Billing and payment details for each appointment.
+**Business Context:**  
+FlexiFit Gym wants a database to manage its members, trainers, and fitness programs.
+
+**Requirements:**  
+- Members register with name, membership type, and start date.  
+- Each member can join multiple programs (Yoga, Zumba, Weight Training).  
+- Trainers assigned to programs; a program may have multiple trainers.  
+- Members may book personal training sessions with trainers.  
+- Attendance recorded for each session.  
+- Payments tracked for memberships and sessions.
+
+### ER Diagram:
+![WhatsApp Image 2025-08-28 at 21 41 52_0d3b2057](https://github.com/user-attachments/assets/067a8872-0a16-4d0f-80c3-cde5fbe2cb97)
+
+
+### Entities and Attributes
+
+| Entity | Attributes (PK, FK)                | Notes   |
+|--------|--------------------                |----------|
+| User   |user_id (PK), name,mobile_no, address |Identifies the user.|  
+| Permission| per_id (PK), per_module, per_name|Defines permissions granted to the user.|       
+|Trainer| trainer_id (PK), name, mobile, email|Represents trainers managing the members.|      
+| Member|mem_id (PK), mem_type, mem_name, mem_mobile, mem_email| Represents gym members.|       
+| Fitness|fit_id (PK), fit_type, fit_desc|Defines the fitness programs.|          
+
+
+### Relationships and Constraints
+
+| Relationship | Cardinality | Participation | Notes |
+|--------------|------------|---------------|-------|
+|User - Permission|1:N|Mandatory (A user must have at least one permission) | A user can have multiple permissions.|     
+| User - Trainer| N:M|Optional (User may or may not be a trainer)| A user can manage many trainers and vice versa.|
+| Trainer - Fitness|1:N|Mandatory (A trainer must be associated with at least one fitness type)|Trainers manage fitness types.|
+|Member - Fitness|N:M|Optional (Members may or may not be associated with a fitness type)|A member can be associated with multiple fitness types.|
+
+### Assumptions
+- Role-Based Access: Users have different roles (e.g., admin, trainer, member), with permissions assigned based on their role.
+- Trainer-Managed Programs: Trainers manage fitness programs, and members can join multiple fitness types, each guided by a trainer.
+- Flexible Member Participation: Members can participate in multiple fitness programs, with flexibility in the types and number of programs they join.
 
 ---
 
-## 📝 Tasks:
-1. Identify entities, relationships, and attributes.
-2. Draw the ER diagram using any tool (draw.io, dbdiagram.io, hand-drawn and scanned).
-3. Include:
-   - Cardinality & participation constraints
-   - Prerequisites for University OR Billing for Hospital
-4. Explain:
-   - Why you chose the entities and relationships.
-   - How you modeled prerequisites or billing.
+# Scenario B: City Library Event & Book Lending System
 
-# ER Diagram Submission - Student Name
+**Business Context:**  
+The Central Library wants to manage book lending and cultural events.
 
-## Scenario Chosen:
-University 
+**Requirements:**  
+- Members borrow books, with loan and return dates tracked.  
+- Each book has title, author, and category.  
+- Library organizes events; members can register.  
+- Each event has one or more speakers/authors.  
+- Rooms are booked for events and study.  
+- Overdue fines apply for late returns.
 
-## ER Diagram:
-
-![438631459-469fcbf7-49c2-434c-9374-52161dc36bd5](https://github.com/user-attachments/assets/2523451c-a46b-4b4a-818a-a0ec2c1e56d4)
-
-## Entities and Attributes:
--STUDENT: REG_NO, STUDENT_NAME,EMAIL,PHONE_NO,D.O.B. <br/>
--COURSE: COURSE_NAME, COURSE_ID, PREREQUISITE,NO_OF_CREDITS. <br/>
--INSTRUCTOR:NAME,STAFF_ID,CONTACT,EMAIL,PHONE_NO. <br/>
+### ER Diagram:
+![WhatsApp Image 2025-08-28 at 21 50 47_6450048c](https://github.com/user-attachments/assets/034cadae-7259-4771-b862-b124130efb47)
 
 
-## Relationships and Constraints:
-ENROLLMENT:
-* STUDENT enrolls in COURSE
-(Cardinality and Participation are not explicitly shown, but it implies a many-to-many relationship where a student can enroll in multiple courses, and each course can have multiple students. Participation is likely total for ENROLLMENT and partial for both STUDENT and COURSE).
+### Entities and Attributes
 
-* TEACHES:
-INSTRUCTOR teaches COURSE
-(Implies a one-to-many relationship where one instructor can teach multiple courses, but each course is taught by one instructor. Participation likely total for COURSE and partial for INSTRUCTOR).
+| Entity | Attributes (PK, FK) | Notes |
+|--------|--------------------|-------|
+|Member|member_id (PK), name|Represents library members.|
+|Book|book_id (PK), title|Represents books available for loan.|
+|Loan|loan_id (PK), date, return_date, member_id (FK), book_id (FK)|Represents the loan transactions between members and books.|
+|Event|event_id (PK), name, date|Represents events that members can register for.|
+|Speaker|speaker_id (PK), name|Represents speakers for events.|
 
-* PREREQUISITE:
-COURSE has PREREQUISITE
-(Reflexive relationship on COURSE, implying that a course can have one or more prerequisite courses, and can be a prerequisite for others. Likely an optional many-to-many relationship. Participation is likely partial on both sides).
+### Relationships and Constraints
+
+| Relationship | Cardinality | Participation | Notes |
+|--------------|------------|---------------|-------|
+|Member - Loan|1:N|Mandatory (A member must have at least one loan)|A member can loan multiple books, but a loan belongs to one member.|
+|Book - Loan|1:N|Mandatory (A book must be loaned to at least one member)|A book can be loaned to multiple members over time, but a loan record is for one book.|
+|Member - Event|M:N|Optional (A member may or may not register for an event)|Members can register for many events, and each event can have many members.|
+|Speaker - Event|M:N|Optional (An event may or may not have a speaker)|An event can have multiple speakers, and a speaker can be assigned to multiple events.|
+### Assumptions
+- Member-Book Loan System: A Member can borrow multiple Books with a Loan representing each borrowing transaction, which includes the loan and return dates.
+- Event Participation: Members can register for multiple Events, and each Event can have multiple Members attending, with optional speakers.
+- Speaker-Event Association: Events may feature one or more Speakers, and a Speaker can be involved in multiple Events.
+
+---
+
+# Scenario C: Restaurant Table Reservation & Ordering
+
+**Business Context:**  
+A popular restaurant wants to manage reservations, orders, and billing.
+
+**Requirements:**  
+- Customers can reserve tables or walk in.  
+- Each reservation includes date, time, and number of guests.  
+- Customers place food orders linked to reservations.  
+- Each order contains multiple dishes; dishes belong to categories (starter, main, dessert).  
+- Bills generated per reservation, including food and service charges.  
+- Waiters assigned to serve reservations.
+
+### ER Diagram:
+<img width="1009" height="603" alt="image" src="https://github.com/user-attachments/assets/08929740-8551-46a1-a958-06f0d74551b3" />
 
 
-## Extension (Prerequisite / Billing):
+### Entities and Attributes
 
-* Prerequisite: Prerequisites are modeled through a reflexive relationship on the COURSE entity. The attribute
-PREREQUISIT (which should likely be PREREQ_ID to reference another course's ID) in the COURSE entity indicates which course(s)
-are required before taking a particular course. This structure allows for defining chains or multiple prerequisites for a single course.
+| Entity | Attributes (PK, FK) | Notes |
+|--------|--------------------|-------|
+|CHEF        | Chef_id (PK), Chef_name, Chef_salary                   | Each chef is uniquely identified by Chef_id. Prepares meals.      |
+|MEAL        | meal_name (PK), meal_price                   | A meal is prepared by chefs, ordered by customers, and consists of ingredients.      |
+| INGREDIENTS       | ing_name (PK), description                   |  Each ingredient has a unique name and is linked to meals.     |
+| CUSTOMERS       | cust_phone (PK), cust_name, cust_address                   |  Customers place orders for meals.     |
+| SUPPLIER       |  S_id (PK), S_name, S_city                  | Suppliers attend to customers.      |
 
-* Billing: Billing information is partially modeled through the FEE attribute in the STUDENT entity. This suggests that each student
-has an associated fee. However, the diagram doesn't provide details on when or how these fees are applied (e.g., per program, per
-semester, per course) or any information about payment status, due dates, or billing history. To model billing more comprehensively,
- you might need additional entities like BILL, PAYMENT, or a more detailed structure within the REGISTRATION or a new enrollment-specific entity to track financial aspects.
+### Relationships and Constraints
 
+| Relationship | Cardinality | Participation | Notes |
+|--------------|------------|---------------|-------|
+|prepares (CHEF–MEAL)              | 1:N           | CHEF (total), MEAL (partial)|One chef can prepare many meals, but a meal is prepared by one chef.|
+| orders (CUSTOMERS–MEAL)             | M:N           | Both partial| A customer can order many meals, and a meal can be ordered by many customers|
+|  consists of (MEAL–INGREDIENTS)| M:N | Both total|Each meal consists of multiple ingredients, and each ingredient can be part of many meals.       |
+| attends (SUPPLIER–CUSTOMERS)          |M:N   |Both partial|A supplier can attend to many customers, and a customer can be attended by many suppliers.
+### Assumptions
+- Each chef can prepare multiple meals, but a meal is prepared by only one chef.
+- A customer can place multiple orders, and each order may include one or more meals. 
+- Each meal consists of one or more ingredients, and an ingredient may be used in multiple meals.
 
-## Design Choices:
-This ER diagram provides a good foundation for a student registration system, capturing key entities and their relationships.
-However, depending on the specific requirements, further refinement might be needed, especially in areas like billing and a clearer
-definition of the 'TYPE' attribute in the REGISTRATION entity.
+---
 
-## RESULT
-The ENROLLMENT relationship indicates that a student can enroll in multiple courses and each course can have many students, allowing the system to track which students are taking which courses. The TEACHES relationship shows that one instructor can teach multiple courses, but each course is taught by only one instructor, assigning teaching responsibilities clearly. The PREREQUISITE relationship defines that a course may require one or more other courses to be completed beforehand, ensuring students gain the necessary foundational knowledge before progressing to advanced topics.
+## Instructions for Students
+
+1. Complete **all three scenarios** (A, B, C).  
+2. Identify entities, relationships, and attributes for each.  
+3. Draw ER diagrams using **draw.io / diagrams.net** or hand-drawn & scanned.  
+4. Fill in all tables and assumptions for each scenario.  
+5. Export the completed Markdown (with diagrams) as **a single PDF**
